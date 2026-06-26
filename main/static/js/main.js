@@ -4,7 +4,7 @@
  */
 
 // ======================== CONFIG ========================
-const WHATSAPP_NUMBER = '97798223858988';   // ⬅️ CHANGE TO YOUR WHATSAPP NUMBER
+const WHATSAPP_NUMBER = '9779823858988';   // ⬅️ CHANGE TO YOUR WHATSAPP NUMBER
 const SHOP_NAME = 'ThreadTales';
 
 // ======================== DOM READY ========================
