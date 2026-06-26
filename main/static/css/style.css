@@ -1,0 +1,356 @@
+/*
+   ThreadTales — Red Carousel + Big Bottom Slider
+*/
+
+html { scroll-behavior: smooth; background: #050505; }
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #050505;
+  color: #e0e0e0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Brand accent ---------- */
+.brand-cream-text { color: #f8f1d8 !important; }
+
+/* ---------- Navbar ---------- */
+.navbar {
+  background-color: rgba(5, 5, 5, 0.95) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid #222;
+  padding: 0.6rem 0;
+}
+.navbar-brand img { height: 44px; width: auto; }
+.navbar .nav-link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.navbar .nav-link:hover,
+.navbar .nav-link.active { color: #f8f1d8 !important; }
+
+/* ---------- Hero ---------- */
+.hero-section {
+  min-height: 100vh;
+  background-color: #050505;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 0 4rem;
+}
+.hero-logo { max-height: 200px; margin-bottom: 2rem; }
+.hero-tagline {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #f8f1d8;
+  opacity: 0.55;
+  margin-bottom: 1.25rem;
+}
+.hero-subtitle {
+  font-size: 1.05rem;
+  color: #8b8b8b;
+  font-weight: 300;
+  max-width: 500px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+/* CTA button */
+.btn-hero {
+  background: #f8f1d8;
+  color: #050505 !important;
+  border: none;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.95rem 2.75rem;
+  transition: all 0.3s ease;
+}
+.btn-hero:hover {
+  background: #fff;
+  color: #050505 !important;
+  box-shadow: 0 0 25px rgba(248,241,216,0.12);
+}
+.btn-hero:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ---------- Section Titles ---------- */
+.section-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 1rem;
+}
+
+/* ---------- Vision ---------- */
+.vision-text {
+  font-weight: 300;
+  line-height: 1.9;
+  color: #999;
+  font-size: 1.05rem;
+}
+
+/* ================================================================
+   PRODUCT SCROLL WRAPPER + BIG BOTTOM SLIDER
+   ================================================================ */
+.products-scroll-wrapper {
+  position: relative;
+}
+
+.products-scroll-container {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.5rem 0.25rem 0;
+  scrollbar-width: none;   /* hide native scrollbar */
+}
+.products-scroll-container::-webkit-scrollbar { display: none; }
+
+.product-card-wrapper {
+  flex: 0 0 320px;
+  scroll-snap-align: start;
+}
+@media (min-width: 768px)  { .product-card-wrapper { flex: 0 0 360px; } }
+@media (min-width: 1200px) { .product-card-wrapper { flex: 0 0 380px; } }
+
+/* ---------- BIG SCROLL CONTROLS (bottom) ---------- */
+.scroll-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 0 1rem;
+}
+
+.scroll-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #dc3545;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(220, 53, 69, 0.35);
+}
+.scroll-btn:hover {
+  background: #e04855;
+  transform: scale(1.08);
+  box-shadow: 0 6px 24px rgba(220, 53, 69, 0.5);
+}
+.scroll-btn:active {
+  transform: scale(0.95);
+}
+
+/* Custom scroll track (visual bar) */
+.scroll-track {
+  flex: 1;
+  max-width: 500px;
+  height: 6px;
+  background: #1a1a1a;
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+.scroll-thumb {
+  height: 100%;
+  background: #dc3545;
+  border-radius: 3px;
+  min-width: 40px;
+  transition: width 0.2s ease, left 0.2s ease;
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-shadow: 0 0 10px rgba(220, 53, 69, 0.4);
+}
+
+/* ================================================================
+   PRODUCT CARD
+   ================================================================ */
+.product-card {
+  background: #0a0a0a;
+  border: 1px solid #1a1a1a;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+.product-card:hover {
+  border-color: #2a2a2a;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.55);
+  transform: translateY(-4px);
+}
+
+.product-card .img-wrapper {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  cursor: pointer;
+  background: #080808;
+}
+.product-card .img-wrapper .carousel,
+.product-card .img-wrapper .carousel-inner,
+.product-card .img-wrapper .carousel-item { height: 100%; }
+
+.product-card .product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.product-card:hover .product-img { transform: scale(1.05); }
+
+.img-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(5,5,5,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 5;
+  pointer-events: none;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.product-card .img-wrapper:hover .img-overlay { opacity: 1; }
+
+/* Badges */
+.product-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 6;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.badge-bestseller { background: #f8f1d8; color: #050505; }
+.badge-new        { background: #c17a4e; color: #fff; }
+.badge-newdrop    { background: #c17a4e; color: #fff; }
+.badge-limited    { background: #fff; color: #050505; }
+.badge-premium    { background: #050505; color: #f8f1d8; border: 1px solid #2a2a2a; }
+.badge-essential  { background: rgba(248,241,216,0.1); color: #f8f1d8; }
+.badge-artisan    { background: #c17a4e; color: #fff; }
+.badge-giftidea   { background: #d4a373; color: #fff; }
+
+/* ================================================================
+   PRODUCT CAROUSEL — RED ARROWS + RED DOTS
+   ================================================================ */
+
+/* ---- Prev/Next arrows: RED circles ---- */
+.product-card .carousel-control-prev,
+.product-card .carousel-control-next {
+  width: 40px;
+  height: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease, background 0.2s ease;
+  background: #dc3545;
+  border-radius: 50%;
+  margin: 0 6px;
+}
+.product-card:hover .carousel-control-prev,
+.product-card:hover .carousel-control-next { opacity: 1; }
+
+.product-card .carousel-control-prev:hover,
+.product-card .carousel-control-next:hover {
+  background: #e04855;
+  box-shadow: 0 0 16px rgba(220, 53, 69, 0.5);
+}
+
+/* Override default Bootstrap arrow SVG — keep it white */
+.product-card .carousel-control-prev-icon,
+.product-card .carousel-control-next-icon {
+  filter: brightness(0) invert(1);
+  width: 18px;
+  height: 18px;
+}
+
+/* ---- Indicator dots: RED pills ---- */
+.product-card .carousel-indicators {
+  margin-bottom: 0.5rem;
+  gap: 7px;
+}
+.product-card .carousel-indicators button {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  border: none !important;
+  background: rgba(220, 53, 69, 0.35) !important;
+  opacity: 1 !important;
+  transition: all 0.3s ease !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.product-card .carousel-indicators button.active {
+  background: #dc3545 !important;
+  width: 28px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+}
+
+/* Card body */
+.product-card .card-body { padding: 1.25rem; }
+.product-card .card-title { font-size: 1.05rem; font-weight: 700; }
+.product-card .card-text {
+  font-size: 0.8rem;
+  color: #999;
+  line-height: 1.55;
+}
+
+/* ---------- Lightbox ---------- */
+#lightboxImage { max-height: 85vh; object-fit: contain; }
+
+/* ---------- Shake ---------- */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 767px) {
+  .hero-section { min-height: 90vh; padding: 5rem 1rem 3rem; }
+  .btn-hero { padding: 0.8rem 1.8rem; font-size: 0.75rem; }
+  .product-card-wrapper { flex: 0 0 280px; }
+  .product-card .img-overlay { opacity: 1; background: rgba(5,5,5,0.3); font-size: 0.7rem; }
+  .product-card .carousel-control-prev,
+  .product-card .carousel-control-next { opacity: 1; }
+  .scroll-btn { width: 42px; height: 42px; font-size: 1.2rem; }
+  .scroll-track { max-width: 200px; }
+}
+
+@media (max-width: 991px) {
+  .navbar-collapse {
+    background: rgba(5,5,5,0.98);
+    padding: 1.5rem;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .navbar .nav-link { padding: 0.7rem 0 !important; }
+}
