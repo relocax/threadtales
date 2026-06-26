@@ -1,15 +1,21 @@
 from django.contrib import admin
-from .models import Product, Order
-from .models import Subscriber
+from .models import Product, ProductImage, Order, Subscriber
+
+
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 1
+    fields = ['image', 'order']
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'category', 'badge', 'rating', 'is_active', 'created_at']
+    list_display = ['name', 'price', 'category', 'badge', 'rating', 'is_active', 'image_count', 'created_at']
     list_filter = ['category', 'badge', 'is_active']
     search_fields = ['name', 'description']
     list_editable = ['price', 'badge', 'is_active']
     ordering = ['-created_at']
+    inlines = [ProductImageInline]
 
     fieldsets = (
         ('Basic Info', {
@@ -18,14 +24,14 @@ class ProductAdmin(admin.ModelAdmin):
         ('Categorization', {
             'fields': ('category', 'badge', 'rating')
         }),
-        ('Images', {
-            'fields': ('image1', 'image2'),
-            'description': 'Filenames of images stored in static/images/'
-        }),
         ('Status', {
             'fields': ('is_active',),
         }),
     )
+
+    def image_count(self, obj):
+        return obj.images.count()
+    image_count.short_description = 'Images'
 
 
 @admin.register(Order)

@@ -117,7 +117,7 @@ function initBuyNowButtons() {
         `*Product:* ${name}`,
         `*Price:* Rs. ${price}`,
         ``,
-        `I'd like to place an order. Please share payment & delivery details.`,
+        `I'd like to place an order.`,
       ].join('%0A');
 
       const waURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;

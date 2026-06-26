@@ -31,9 +31,6 @@ class Product(models.Model):
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='Outerwear')
     rating = models.DecimalField(max_digits=2, decimal_places=1, default=4.5)
 
-    image1 = models.CharField(max_length=200, help_text="Filename in static/images/ (e.g. product1.jpg)")
-    image2 = models.CharField(max_length=200, blank=True, help_text="Alt view filename in static/images/ (e.g. product1_2.jpg)")
-
     is_active = models.BooleanField(default=True, help_text="Only active products appear on the site.")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -47,6 +44,24 @@ class Product(models.Model):
     @property
     def currency(self):
         return 'Rs.'
+
+    @property
+    def first_image(self):
+        """Return the first image filename, or empty string if none."""
+        img = self.images.first()
+        return img.image if img else ''
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    image = models.CharField(max_length=200, help_text="Filename in static/images/ (e.g. product1.jpg)")
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"{self.product.name} — Image {self.order}"
 
 
 class Order(models.Model):
@@ -79,6 +94,7 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order #{self.id} — {self.product_name} (Rs. {self.total_amount})"
+
 
 class Subscriber(models.Model):
     name = models.CharField(max_length=200)

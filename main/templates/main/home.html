@@ -72,16 +72,16 @@
           <div class="card h-100 border-0 shadow-sm product-card rounded-0">
             <div id="carouselProd{{ product.id }}" class="carousel slide img-wrapper" data-bs-ride="false" onclick="openLightboxFromCarousel(event, 'carouselProd{{ product.id }}')">
               <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselProd{{ product.id }}" data-bs-slide-to="0" class="active" aria-current="true"></button>
-                <button type="button" data-bs-target="#carouselProd{{ product.id }}" data-bs-slide-to="1"></button>
+                {% for img in product.images.all %}
+                <button type="button" data-bs-target="#carouselProd{{ product.id }}" data-bs-slide-to="{{ forloop.counter0 }}"{% if forloop.first %} class="active" aria-current="true"{% endif %}></button>
+                {% endfor %}
               </div>
               <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img src="{% static 'images/'|add:product.image1 %}" class="d-block w-100 product-img" alt="{{ product.name }} 1">
+                {% for img in product.images.all %}
+                <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                  <img src="{% static 'images/'|add:img.image %}" class="d-block w-100 product-img" alt="{{ product.name }} {{ forloop.counter }}">
                 </div>
-                <div class="carousel-item">
-                  <img src="{% static 'images/'|add:product.image2 %}" class="d-block w-100 product-img" alt="{{ product.name }} 2">
-                </div>
+                {% endfor %}
                 <div class="img-overlay"><i class="bi bi-zoom-in"></i> View</div>
               </div>
               <button class="carousel-control-prev" type="button" data-bs-target="#carouselProd{{ product.id }}" data-bs-slide="prev">
