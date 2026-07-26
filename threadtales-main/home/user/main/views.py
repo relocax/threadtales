@@ -1,0 +1,66 @@
+from django.shortcuts import render
+
+def home(request):
+    products = [
+        {
+            'id': 1,
+            'name': 'Classic Linen Shirt',
+            'price': 49.99,
+            'description': 'Breathable organic linen, perfect for warm days. Features a relaxed fit with mother-of-pearl buttons.',
+            'image': 'product1.jpg',
+            'badge': 'Bestseller',
+            'category': 'Shirts',
+            'rating': 4.8,
+        },
+        {
+            'id': 2,
+            'name': 'Vintage Denim Jacket',
+            'price': 89.99,
+            'description': 'Timeless denim jacket with a lived-in feel. Crafted from heavyweight cotton with brass hardware.',
+            'image': 'product2.jpg',
+            'badge': 'New',
+            'category': 'Outerwear',
+            'rating': 4.6,
+        },
+        {
+            'id': 3,
+            'name': 'Cotton Wrap Dress',
+            'price': 64.99,
+            'description': 'An elegant wrap dress in soft cotton twill. Flattering silhouette with an adjustable waist tie.',
+            'image': 'product3.jpg',
+            'badge': 'Popular',
+            'category': 'Dresses',
+            'rating': 4.9,
+        },
+        {
+            'id': 4,
+            'name': 'Wool Blend Overcoat',
+            'price': 129.99,
+            'description': 'A sophisticated overcoat in a warm wool blend. Notch lapel, fully lined, tailored fit.',
+            'image': 'product4.jpg',
+            'badge': 'Premium',
+            'category': 'Outerwear',
+            'rating': 4.7,
+        },
+        {
+            'id': 5,
+            'name': 'Silk Blend Scarf',
+            'price': 34.99,
+            'description': 'Luxuriously soft silk-blend scarf with hand-rolled edges. Adds a refined touch to any outfit.',
+            'image': 'product5.jpg',
+            'badge': 'Gift Idea',
+            'category': 'Accessories',
+            'rating': 4.5,
+        },
+        {
+            'id': 6,
+            'name': 'Handwoven Cardigan',
+            'price': 79.99,
+            'description': 'Artisan-made cardigan from handwoven cotton. Chunky knit texture with coconut shell buttons.',
+            'image': 'product6.jpg',
+            'badge': 'Artisan',
+            'category': 'Knitwear',
+            'rating': 4.9,
+        },
+    ]
+    return render(request, 'main/home.html', {'products': products})
